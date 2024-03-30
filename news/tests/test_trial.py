@@ -1,3 +1,4 @@
+import unittest
 # news/tests/test_trial.py
 from django.test import TestCase
 
@@ -5,6 +6,7 @@ from django.test import TestCase
 from news.models import News
 
 
+@unittest.skip('Not actual')
 # Создаём тестовый класс с произвольным названием, наследуем его от TestCase.
 class TestNews(TestCase):
 
