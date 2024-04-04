@@ -26,7 +26,7 @@ class TestHomePage(TestCase):
                 text='Просто текст',
                 date=today - timedelta(days=index)
             )
-            all_news.append(news)
+        all_news.append(news)
         News.objects.bulk_create(all_news)
 
     def test_news_count(self):

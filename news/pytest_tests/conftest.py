@@ -1,8 +1,10 @@
 import pytest
+from datetime import datetime, timedelta
 
 from django.test.client import Client
 
 from news.models import Comment, News
+from news.constants import NEWS_COUNT_ON_HOME_PAGE
 
 
 @pytest.fixture
@@ -30,6 +32,12 @@ def not_author_client(not_author):
 
 
 @pytest.fixture
+def client():
+    client = Client()
+    return client
+
+
+@pytest.fixture
 def news():
     news = News.objects.create(
         title='Заголовок',
@@ -49,5 +57,18 @@ def comment(author, news):
 
 
 @pytest.fixture
-def pk_for_args(comment):
-    return (comment.pk,)
+def id_for_args(comment):
+    return (comment.id,)
+
+
+@pytest.fixture
+def homepage_for_paginator_test():
+    all_news = []
+    for index in (NEWS_COUNT_ON_HOME_PAGE + 1):
+        news = News(
+            title=f'Новость {index}',
+            text='Просто текст',
+            date=datetime.today() - timedelta(days=index)
+        )
+    all_news.append(news)
+    return News.objects.bulk_create(all_news)

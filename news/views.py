@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -6,6 +5,7 @@ from django.views import generic
 
 from .forms import CommentForm
 from .models import Comment, News
+from .constants import NEWS_COUNT_ON_HOME_PAGE
 
 
 class NewsList(generic.ListView):
@@ -21,7 +21,7 @@ class NewsList(generic.ListView):
         """
         return self.model.objects.prefetch_related(
             'comment_set'
-        )[:settings.NEWS_COUNT_ON_HOME_PAGE]
+        )[:NEWS_COUNT_ON_HOME_PAGE]
 
 
 class NewsDetail(generic.DetailView):
