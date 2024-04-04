@@ -32,13 +32,7 @@ def not_author_client(not_author):
 
 
 @pytest.fixture
-def client():
-    client = Client()
-    return client
-
-
-@pytest.fixture
-def news():
+def news(db):
     news = News.objects.create(
         title='Заголовок',
         text='Текст'
@@ -62,13 +56,29 @@ def id_for_args(comment):
 
 
 @pytest.fixture
-def homepage_for_paginator_test():
+def all_news(db):
     all_news = []
-    for index in (NEWS_COUNT_ON_HOME_PAGE + 1):
+    for index in range(NEWS_COUNT_ON_HOME_PAGE + 1):
         news = News(
             title=f'Новость {index}',
             text='Просто текст',
             date=datetime.today() - timedelta(days=index)
         )
-    all_news.append(news)
-    return News.objects.bulk_create(all_news)
+        all_news.append(news)
+    News.objects.bulk_create(all_news)
+    return all_news
+
+
+@pytest.fixture
+def news_comments(news, author):
+    news_comments = []
+    for index in range(10):
+        comments = Comment(
+            news=news,
+            text='Просто текст',
+            author=author,
+            created=datetime.today() - timedelta(days=index)
+        )
+        news_comments.append(comments)
+    Comment.objects.bulk_create(news_comments)
+    return news_comments

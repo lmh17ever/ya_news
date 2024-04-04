@@ -60,6 +60,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = []
 
+LOGIN_URL = 'users:login'
 
 LANGUAGE_CODE = 'ru'
 
