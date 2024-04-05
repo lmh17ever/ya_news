@@ -45,7 +45,7 @@ def test_availability_for_comment_edit_and_delete(
     'name',
     ('news:edit', 'news:delete')
 )
-def test_redirects(client, name, comment, news):
+def test_redirects_for_anonymous_user(client, name, comment, news):
     login_url = reverse('users:login')
     url = reverse(name, args=(comment.id,))
     expected_url = f'{login_url}?next={url}'

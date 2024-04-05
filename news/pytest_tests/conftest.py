@@ -82,3 +82,12 @@ def news_comments(news, author):
         news_comments.append(comments)
     Comment.objects.bulk_create(news_comments)
     return news_comments
+
+
+@pytest.fixture
+def form_data(news, author):
+    return {
+        'news': news.id,
+        'author': author.id,
+        'text': 'Какой-то текст',
+    }
